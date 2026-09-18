@@ -1,8 +1,7 @@
-"tsx"
 "use client";
 
 import React, { useState } from "react";
-import { Field } from "@/components/ui/Field";
+import { Field } from "./ui/Field";
 
 export function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);

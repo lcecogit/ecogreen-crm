@@ -1,5 +1,5 @@
-import { brand, services, reasons } from "@/lib/brand-content";
-import { QuoteForm } from "./QuoteForm";
+import { brand, services, reasons } from "../lib/brand-content";
+import { QuoteForm } from "../components/QuoteForm";
 
 export default function HomePage() {
   return (

@@ -1,5 +1,5 @@
-import type { Metadata } from "node_modules/next";
-import "@/styles/tokens.css";
+import type { Metadata } from "next";
+import "../styles/tokens.css";
 
 export const metadata: Metadata = {
   title: "EcoGreen Movers & Removals CRM",

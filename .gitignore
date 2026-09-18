@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.next-stale*/
+.vercel/
+
+# Local environment files
+.env*.local
+
+# Logs and editor files
+npm-debug.log*
+.DS_Store
