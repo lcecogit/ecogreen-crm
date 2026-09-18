@@ -2248,6 +2248,14 @@ $$;
 
 revoke all on function erase_customer_data from public, anon, authenticated;
 
+-- Reference allocation is internal to the checked intake and booking functions.
+revoke execute on function public.next_reference(uuid,text,timestamptz) from public, anon, authenticated;
+alter function private.touch_updated_at() set search_path = '';
+alter function private.reject_sent_quote_change() set search_path = '';
+alter function private.reject_sent_quote_child_change() set search_path = '';
+alter function private.reject_audit_mutation() set search_path = '';
+alter function private.role_rank(public.brand_role) set search_path = '';
+
 
 -- ##########################################################################
 -- # 05_seed.sql

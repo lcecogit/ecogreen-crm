@@ -1,3 +1,5 @@
+import { isSampleMode } from "@/lib/sample-data";
+import { LiveLeadDetail } from "@/components/crm/LiveViews";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -9,7 +11,8 @@ export const dynamic = "force-dynamic";
 
 const NOW = new Date("2026-09-17T09:00:00Z");
 
-export default function LeadDetailPage({ params }: { params: { id: string } }) {
+export default async function LeadDetailPage({ params }: { params: { id: string } }) {
+  if (!isSampleMode) return <LiveLeadDetail id={params.id} />;
   const lead = sampleLeads.find((l) => l.id === params.id);
   if (!lead) notFound();
 

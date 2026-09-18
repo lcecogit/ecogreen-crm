@@ -1,3 +1,5 @@
+import { isSampleMode } from "@/lib/sample-data";
+import { LiveLeads } from "@/components/crm/LiveViews";
 import Link from "next/link";
 
 import { ScoreBar } from "@/components/crm/ScoreBar";
@@ -21,11 +23,12 @@ const FILTERS = [
   { key: "all", label: "All" },
 ] as const;
 
-export default function LeadsPage({
+export default async function LeadsPage({
   searchParams,
 }: {
-  searchParams: { status?: string; owner?: string };
+  searchParams: { status?: string; owner?: string; page?: string };
 }) {
+  if (!isSampleMode) return <LiveLeads {...searchParams} />;
   const status = searchParams.status ?? "open";
   const ownerFilter = searchParams.owner;
 

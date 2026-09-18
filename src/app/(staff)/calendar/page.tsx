@@ -1,3 +1,5 @@
+import { isSampleMode } from "@/lib/sample-data";
+import { LiveCalendar } from "@/components/crm/LiveViews";
 import { sampleJobs } from "@/lib/sample-data";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +22,8 @@ const END_HOUR = 22;
  *  because the question this screen answers is "what is already on that day"
  *  — and a list cannot show a clash. Double-booking is rejected by a database
  *  constraint, not by this view; the view only has to make it obvious. */
-export default function CalendarPage() {
+export default async function CalendarPage() {
+  if (!isSampleMode) return <LiveCalendar />;
   return (
     <div className="mx-auto w-full max-w-content">
       <header className="mb-6 flex flex-wrap items-end justify-between gap-4">

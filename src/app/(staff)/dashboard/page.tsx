@@ -1,3 +1,5 @@
+import { isSampleMode } from "@/lib/sample-data";
+import { LiveDashboard } from "@/components/crm/LiveViews";
 import Link from "next/link";
 
 import { BarRows, LineChart, Sparkline, TargetBars } from "@/components/charts/Charts";
@@ -22,7 +24,8 @@ import {
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Dashboard" };
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  if (!isSampleMode) return <LiveDashboard />;
   const open = sampleLeads.filter((l) => ["new", "qualifying", "quoted", "chasing"].includes(l.status));
   const unassigned = open.filter((l) => !l.owner);
 
