@@ -1,11 +1,10 @@
-node_modules/
-.next/
+node_modules
+.next
 .next-stale*/
-.vercel/
-
-# Local environment files
-.env*.local
-
-# Logs and editor files
-npm-debug.log*
-.DS_Store
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+.tmp
+.tmp/
+.audit

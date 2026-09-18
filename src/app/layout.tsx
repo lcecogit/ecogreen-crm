@@ -1,46 +1,45 @@
-import type { Metadata } from "next";
-import "../styles/tokens.css";
+import type { Metadata, Viewport } from "next";
+import { GeistMono } from "geist/font/mono";
+
+// Inter — the typeface ecogreenmovers.co.uk uses for body, headings and
+// buttons. Self-hosted from npm rather than Google Fonts, which is blocked
+// both by this environment's egress policy and by the artifact CSP, and which
+// would cost a third-party request and a layout shift either way.
+import "@fontsource-variable/inter";
+import "./globals.css";
+
+/* One typeface across all six brands, deliberately. The group's other sites
+   use different faces where they are branded at all (Glasgow Moving sets
+   Instrument Sans, Removals Company Manchester sets Heebo), but a CRM that
+   changes typeface when a user switches brand reads as six products rather
+   than one platform. Brand identity travels through the accent, the logo and
+   the document templates instead. Geist Mono stays for reference codes and
+   figures — a need the marketing sites do not have. */
 
 export const metadata: Metadata = {
-  title: "EcoGreen Movers & Removals CRM",
-  description: "National and international moving services management system.",
+  title: { default: "Operations", template: "%s · Operations" },
+  description: "Internal operations platform.",
+  // A private application. Never indexable, in any environment.
+  robots: { index: false, follow: false, nocache: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-[var(--surface-canvas)] text-[var(--ink-1)] antialiased font-sans">
-        {mainLayoutWrapper(children)}
+    <html lang="en-GB" className={GeistMono.variable}>
+      <body className="min-h-dvh bg-surface-canvas text-ink-1 antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-contrast"
+        >
+          Skip to main content
+        </a>
+        {children}
       </body>
     </html>
-  );
-}
-
-function mainLayoutWrapper(children: React.ReactNode) {
-  return (
-    <div className="min-h-screen flex flex-col selection:bg-[var(--accent-wash)] selection:text-[var(--accent)]">
-      <header className="border-b border-[var(--hairline)] bg-[var(--surface-raised)] sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-lg text-[var(--accent)] tracking-tight">EcoGreen CRM</span>
-          </div>
-          <nav className="flex items-center gap-6 text-sm font-medium text-[var(--ink-2)]">
-            <span className="hover:text-[var(--accent)] cursor-pointer transition-colors">Operations</span>
-            <span className="hover:text-[var(--accent)] cursor-pointer transition-colors">Leads</span>
-            <span className="hover:text-[var(--accent)] cursor-pointer transition-colors">Quotations</span>
-          </nav>
-        </div>
-      </header>
-      <main className="flex-1">
-        {children}
-      </main>
-      <footer className="border-t border-[var(--hairline)] bg-[var(--surface-sunken)] py-6 text-center text-xs text-[var(--ink-3)]">
-        EcoGreen Movers & Removals &copy; 2026. All rights reserved.
-      </footer>
-    </div>
   );
 }

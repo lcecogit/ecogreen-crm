@@ -5,17 +5,42 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test tests/**/*.test.ts",
+    "check": "npm run typecheck && npm run test",
+    "seed:generate": "tsx scripts/generate-seed-sql.ts",
+    "db:verify": "bash scripts/db-verify.sh",
+    "types:generate": "supabase gen types typescript --schema public > src/lib/database.types.ts",
+    "audit": "node scripts/audit.mjs .audit",
+    "sql:bundle": "bash scripts/bundle-sql.sh",
+    "db:verify:parts": "bash scripts/parts-verify.sh"
   },
   "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@supabase/ssr": "^0.12.3",
+    "@supabase/supabase-js": "^2.110.8",
+    "geist": "^1.7.2",
     "next": "14.2.35",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react": "^18",
+    "react-dom": "^18",
+    "server-only": "^0.0.1",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@types/node": "^20.19.43",
-    "@types/react": "^18.3.31",
-    "@types/react-dom": "^18.3.7",
-    "typescript": "^5.4.5"
+    "@axe-core/playwright": "^4.13.0",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.35",
+    "libpg-query": "^18.1.5",
+    "playwright": "^1.63.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.23.1",
+    "typescript": "^5"
   }
 }

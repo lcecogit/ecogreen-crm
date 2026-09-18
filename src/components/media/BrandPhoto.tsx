@@ -1,21 +1,19 @@
 import Image from "next/image";
 
-interface BrandPhotoProps {
-  src: string;
-  alt: string;
-  className?: string;
-}
+import { cn } from "@/lib/cn";
 
-export function BrandPhoto({ src, alt, className = "" }: BrandPhotoProps) {
+export type BrandPhotoProps = { src?: string; alt?: string; priority?: boolean; className?: string; sizes?: string };
+
+export function BrandPhoto({ src, alt, priority = false, className, sizes = "(max-width: 768px) 100vw, 50vw" }: BrandPhotoProps) {
+  if (!src) return <PhotoFallback className={className} />;
   return (
-    <div className={`overflow-hidden rounded-2xl border border-[var(--hairline)] bg-[var(--surface-sunken)] ${className}`}>
-      <Image
-        src={src}
-        alt={alt}
-        width={800}
-        height={600}
-        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-      />
+    <div className={cn("relative overflow-hidden bg-surface-sunken", className)}>
+      <Image src={src} alt={alt ?? ""} fill sizes={sizes} priority={priority} quality={82} className="object-cover" />
+      <div className="pointer-events-none absolute inset-0 bg-ink-1/[0.04] mix-blend-multiply" aria-hidden />
     </div>
   );
+}
+
+export function PhotoFallback({ className }: { className?: string }) {
+  return <div className={cn("relative overflow-hidden bg-surface-sunken", className)} aria-hidden><div className="absolute inset-0 opacity-[0.55]" style={{ background: "radial-gradient(120% 90% at 20% 15%, var(--accent-wash) 0%, transparent 60%)" }} /><div className="absolute inset-0" style={{ background: "radial-gradient(100% 100% at 50% 0%, transparent 40%, rgb(0 0 0 / 0.07) 100%)" }} /></div>;
 }

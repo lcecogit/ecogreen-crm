@@ -1,21 +1,20 @@
-import React from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
+import { cn } from "@/lib/cn";
 
-interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-}
-
-export function Field({ label, id, ...props }: FieldProps) {
-  const fieldId = id || label.toLowerCase().replace(/\s+/g, "-");
+export function Field({ label, htmlFor, hint, error, required, children }: { label: string; htmlFor: string; hint?: string; error?: string; required?: boolean; children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label htmlFor={fieldId} className="text-xs font-semibold text-[var(--ink-2)]">
-        {label}
+    <div className="flex flex-col gap-2">
+      <label htmlFor={htmlFor} className="text-label text-ink-1">
+        {label}{required ? <span className="ml-1 text-ink-3">(required)</span> : null}
       </label>
-      <input
-        id={fieldId}
-        {...props}
-        className="h-11 px-4 rounded-xl bg-[var(--surface-sunken)] border border-[var(--hairline)] text-[var(--ink-1)] text-sm placeholder:text-[var(--ink-4)] focus:outline-none focus:border-[var(--accent)] focus:bg-[var(--surface-canvas)] transition-colors"
-      />
+      {children}
+      <p id={`${htmlFor}-hint`} className={cn("min-h-4 text-caption", error ? "text-status-critical-text" : "text-ink-2")}>
+        {error ?? hint ?? " "}
+      </p>
     </div>
   );
+}
+
+export function TextInput({ invalid, className, ...props }: InputHTMLAttributes<HTMLInputElement> & { invalid?: boolean }) {
+  return <input aria-invalid={invalid || undefined} aria-describedby={props.id ? `${props.id}-hint` : undefined} className={cn("h-11 w-full rounded-md border bg-surface-raised px-4 text-body text-ink-1", "placeholder:text-ink-3", "transition-colors duration-instant ease-standard", invalid ? "border-status-critical-text" : "border-hairline", className)} {...props} />;
 }
